@@ -1,6 +1,6 @@
 
 server:
-  port: 0 # \uAC19\uC740 \uC11C\uBE44\uC2A4\uB97C \uC5EC\uB7EC\uAC1C \uB744\uC6B8 \uB54C \uCDA9\uB3CC\uC744 \uBC29\uC9C0\uD558\uAE30 \uC704\uD574 \uC784\uC758\uC758 \uD3EC\uD2B8\uB85C \uC124\uC815
+  port: 0 # 여러개의 서비스 작동시 충돌 방지를 위해 포트를 0으로 설정하여 랜덤 포트로 설정한다.
 
 spring:
   application:
@@ -8,9 +8,9 @@ spring:
 
 eureka:
   instance:
-    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}} # \uC11C\uBE44\uC2A4 \uC778\uC2A4\uD134\uC2A4 ID
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}} # Eureka에 등록될 서비스의 인스턴스 ID를 설정한다.
   client:
-    register-with-eureka: true # Discovery Server\uC5D0 \uB4F1\uB85D
-    fetch-registry: true # Discovery Server\uC5D0 \uB4F1\uB85D\uB41C \uC11C\uBE44\uC2A4 \uC815\uBCF4\uB97C \uB85C\uCEEC \uCE90\uC2DC\uC5D0 \uB4F1\uB85D
+    register-with-eureka: true # Discovery Client로서 Eureka Server에 등록한다.
+    fetch-registry: true # Eureka Server에 등록된 서비스들의 정보를 가져온다.
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka/ # Discovery Server\uC758 \uB4F1\uB85D \uC8FC\uC18C
+      defaultZone: http://127.0.0.1:8761/eureka/ # Eureka Discovery Server의 주소를 설정한다.
