@@ -1,0 +1,14 @@
+
+server:
+  port: 9001
+
+spring:
+  application:
+    name: user-service
+
+eureka:
+  client:
+    register-with-eureka: true # Discovery Server\uC5D0 \uB4F1\uB85D
+    fetch-registry: true # Discovery Server\uC5D0 \uB4F1\uB85D\uB41C \uC11C\uBE44\uC2A4 \uC815\uBCF4\uB97C \uB85C\uCEEC \uCE90\uC2DC\uC5D0 \uB4F1\uB85D
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/ # Discovery Server\uC758 \uB4F1\uB85D \uC8FC\uC18C
