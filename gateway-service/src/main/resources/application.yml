@@ -21,7 +21,12 @@ spring:
           filters:
 #            - AddRequestHeader=user-request, user-request-header
 #            - AddResponseHeader=user-response, user-response-header
-            - CustomFilter
+            - name: CustomFilter
+            - name: LoggingFilter
+              args:
+                baseMessage: Spring Cloud Gateway Logging Filter
+                preLogger: true
+                postLogger: true
       default-filters:
         - name: GlobalFilter
           args:
