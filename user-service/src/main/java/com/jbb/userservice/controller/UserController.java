@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @GetMapping("/welcome")
-    public String welcome(@RequestHeader("user-request") String userRequestHeader,
-                          @RequestHeader("user-response") String userResponseHeader) {
+    public String welcome(@RequestHeader("user-request") String userRequestHeader) {
         System.out.println(userRequestHeader);
-        System.out.println(userResponseHeader);
         return "Welcome to user-service";
     }
 
