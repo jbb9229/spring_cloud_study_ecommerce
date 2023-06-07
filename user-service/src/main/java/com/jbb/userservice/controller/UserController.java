@@ -15,4 +15,9 @@ public class UserController {
         return "Welcome to user-service";
     }
 
+    @GetMapping("/check")
+    public String check() {
+        return "Hi, there. This is a message from user-service";
+    }
+
 }

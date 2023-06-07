@@ -19,5 +19,6 @@ spring:
           predicates:
             - Path=/user-service/**
           filters:
-            - AddRequestHeader=user-request, user-request-header
-            - AddResponseHeader=user-response, user-response-header
+#            - AddRequestHeader=user-request, user-request-header
+#            - AddResponseHeader=user-response, user-response-header
+            - CustomFilter
