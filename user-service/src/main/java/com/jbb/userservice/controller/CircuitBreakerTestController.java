@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/circuit-breaker")
+@RequestMapping("/user/circuit-breaker")
 public class CircuitBreakerTestController {
 
     private final CircuitBreakerTestService circuitBreakerTestService;
