@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.util.HashMap;
+
 @Slf4j
 @ControllerAdvice
 public class ExceptionController {
@@ -23,6 +25,7 @@ public class ExceptionController {
         ErrorResponse response = ErrorResponse.builder()
                                               .code(HttpStatus.BAD_REQUEST.value())
                                               .message(e.getMessage())
+                                              .validation(new HashMap<>())
                                               .build();
 
         for (FieldError fieldError : e.getFieldErrors()) {

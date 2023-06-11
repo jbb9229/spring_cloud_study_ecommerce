@@ -1,6 +1,7 @@
 package com.jbb.userservice.service;
 
 import com.jbb.userservice.domain.User;
+import com.jbb.userservice.exception.DuplicateUserInfo;
 import com.jbb.userservice.repository.UserRepository;
 import com.jbb.userservice.request.SignUp;
 import jakarta.transaction.Transactional;
@@ -19,9 +20,7 @@ public class GeneralUserService implements UserService {
     @Transactional
     public void signUp(SignUp signUp) {
         userRepository.findByEmail(signUp.getEmail())
-                                         .ifPresent(user -> {
-                                             throw new IllegalArgumentException("이미 가입된 유저입니다.");
-                                         });
+                                         .ifPresent(user -> { throw new DuplicateUserInfo(user); });
 
         userRepository.save(User.builder()
                                 .email(signUp.getEmail())

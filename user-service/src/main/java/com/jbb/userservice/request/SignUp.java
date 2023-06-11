@@ -13,17 +13,17 @@ import lombok.ToString;
 @ToString
 public class SignUp {
 
-    @NotBlank(message = "Email cannot be null")
-    @Size(min = 2, message = "Email not be less than two characters")
+    @NotBlank
+    @Size(min = 2)
     @Email
     private String email;
 
-    @NotBlank(message = "Password cannot be null")
-    @Size(min = 8, message = "Password must be equals or grater than 8 characters")
+    @NotBlank
+    @Size(min = 8)
     private String password;
 
-    @NotBlank(message = "Name cannot be null")
-    @Size(min = 2, message = "Name not be less than two characters")
+    @NotBlank
+    @Size(min = 2)
     private String name;
 
     @Builder
