@@ -38,3 +38,66 @@ eureka:
 
 greeting:
   message: Hello # application.yml에 설정된 greeting.message를 사용한다.
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        failure-rate-threshold: 50 # CircuitBreaker가 열리는 실패율을 설정한다.
+        slow-call-duration-threshold: 60000 # CircuitBreaker가 열리는 느린 요청의 시간을 설정한다.
+        slow-call-rate-threshold: 100 # CircuitBreaker가 열리는 느린 요청의 비율을 설정한다.
+        permitted-number-of-calls-in-half-open-state: 3 # CircuitBreaker가 Half-Open 상태일 때 허용되는 요청 수를 설정한다.
+        max-wait-duration-in-half-open-state: 1000 # CircuitBreaker가 Half-Open 상태일 때 대기하는 시간을 설정한다.
+        sliding-window-type: COUNT_BASED # CircuitBreaker가 열리는 실패율을 계산하는 방식을 설정한다.
+        sliding-window-size: 10 # CircuitBreaker가 열리는 실패율을 계산하는 방식에 따른 윈도우 크기를 설정한다.
+        minimum-number-of-calls: 5 # CircuitBreaker가 열리기 전에 허용되는 최소 요청 수를 설정한다.
+        wait-duration-in-open-state: 10000 # CircuitBreaker가 열려있는 상태일 때 대기하는 시간을 설정한다.
+
+    instances:
+      testCircuitBreaker:
+        base-config: default # default로 설정해둔 CircuitBreaker 설정을 사용한다.
+
+  bulkhead:
+    instances:
+      testCircuitBreaker:
+        max-concurrent-calls: 25 # CircuitBreaker가 동시에 처리할 수 있는 최대 요청 수를 설정한다.
+        max-wait-duration: 0 # CircuitBreaker가 동시에 처리할 수 있는 최대 요청 수를 초과했을 때 대기하는 시간으로 0으로 설정하여 대기하지 않도록 한다.
+
+  ratelimiter:
+    instances:
+      testCircuitBreaker:
+        limit-for-period: 50 # CircuitBreaker가 설정된 시간 동안 처리할 수 있는 최대 요청 수를 설정한다.
+        limit-refresh-period: 500 # CircuitBreaker가 설정된 시간을 초과했을 때 다시 설정된 요청 수를 사용할 수 있도록 설정한다.
+        timeout-duration: 5000 # CircuitBreaker가 설정된 시간을 초과했을 때 대기하는 시간을 설정한다.
+        register-health-indicator: true # actuator를 통해 RateLimiter의 상태를 확인할 수 있도록 설정한다.
+
+  # fallback 메서드가 정의되어 있지 않은 에러의 경우 재시도
+  retry:
+    instances:
+      testCircuitBreaker:
+        max-retry-attempts: 3 # 최대 재시도 횟수를 설정한다.
+        wait-duration: 500 # 재시도 사이의 대기 시간을 설정한다.
+#        retry-exceptions: # default로 설정 시 모든 에러에 대해 재시도
+#        - java.io.IOException # 재시도할 에러를 설정한다.
+#        - java.util.concurrent.TimeoutException
+
+  timelimiter:
+    instances:
+      testCircuitBreaker:
+        timeout-duration: 1000 # CircuitBreaker가 설정된 시간을 초과했을 때 대기하는 시간을 설정한다.
+
+management: # actuator 설정
+  endpoint:
+    web:
+      exposure:
+        include: "*" # 모든 endpoint를 노출한다.
+  endpoints:
+    shutdown:
+      enabled: true # shutdown endpoint를 노출한다.
+    health:
+      show-details: always # health endpoint를 호출할 때 상세 정보를 보여준다.
+  health:
+    circuitbreakers:
+      enabled: true # actuator를 통해 CircuitBreaker의 상태를 확인할 수 있도록 설정한다.
+    ratelimiters:
+      enabled: true # actuator를 통해 RateLimiter의 상태를 확인할 수 있도록 설정한다.
