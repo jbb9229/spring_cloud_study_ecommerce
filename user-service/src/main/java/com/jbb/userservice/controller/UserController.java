@@ -2,6 +2,7 @@ package com.jbb.userservice.controller;
 
 import com.jbb.userservice.request.SignUp;
 import com.jbb.userservice.service.UserService;
+import io.micrometer.core.annotation.Timed;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,7 @@ public class UserController {
         return environment.getProperty("greeting.message");
     }
 
+    @Timed(value = "user.signup.time")
     @PostMapping("/signup")
     public HttpStatus signup(@Valid @RequestBody SignUp signUp) {
         userService.signUp(signUp);
