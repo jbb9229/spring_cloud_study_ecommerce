@@ -5,12 +5,14 @@ eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}} # Eureka에 등록될 서비스의 인스턴스 ID를 설정한다.
 
 spring:
   application:
     name: gateway-service
+  profiles:
+    active: local
   cloud:
     gateway:
       routes:

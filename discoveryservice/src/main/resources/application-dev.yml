@@ -1,0 +1,4 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://ss-dev-alb-311095464.ap-northeast-2.elb.amazonaws.com:8761/eureka # Eureka Server의 주소를 설정한다.
